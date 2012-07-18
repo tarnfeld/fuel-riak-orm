@@ -8,7 +8,7 @@ class Riak_Test
 {
     public function run()
     {
-        $client = new RiakClient("10.0.1.33");
+        $client = new RiakClient("127.0.0.1");
 		$bucket = $client->bucket("test_bucket");
 
 		$test_object = $bucket->newObject("test_object");
@@ -18,5 +18,7 @@ class Riak_Test
 			"key3" => 123
 		));
 		$test_object->store();
+
+        
     }
 }
