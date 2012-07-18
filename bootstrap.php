@@ -8,8 +8,10 @@
  * @author Tom Arnfeld <tarnfeld@me.com>
  */
 
+// Riak-PHP Classes
 Autoloader::add_classes(array(
 
+	// Riak-PHP Classes
 	"RiakClient"			=> __DIR__ . '/riak-php/riak.php',
 	"RiakMapReduce"			=> __DIR__ . '/riak-php/riak.php',
 	"RiakMapReducePhase"	=> __DIR__ . '/riak-php/riak.php',
@@ -20,3 +22,9 @@ Autoloader::add_classes(array(
 	"RiakStringIO"			=> __DIR__ . '/riak-php/riak.php',
 	"RiakUtils"				=> __DIR__ . '/riak-php/riak.php'
 ));
+
+// Add the RiakORM namespace
+Autoloader::add_namespace('RiakORM', __DIR__ . '/classes/');
+
+// Load the riak config
+Config::load("riak", true);

@@ -2,32 +2,21 @@
 
 namespace RiakORM;
 
-use \TestCase as FuelTestCase;
-
 class TestException extends \Exception { }
 
-class TestCase extends FuelTestCase
+class Test extends \TestCase
 {
-    /**
-     * The host running riak on which to test
-     * 
-     * @var _riakHost
-     */
-    protected $_riakHost    = "127.0.0.1";
 
     /**
-     * The port used to connect to the host
-     * 
-     * @var _riakPort
+     * Test connection to riak
      */
-    protected $_riakPort    = 8098;
+    public function testConnection()
+    {
+        $riak = $this->_riak();
 
-    /**
-     * The bucket to test operations with
-     * 
-     * @var _riakBucket
-     */
-    protected $_riakBucket  = "fuel_test_bucket";
+        // Assert we have a RiakClient object
+        $this->assertInstanceOf('RiakClient', $riak);
+    }
 
     /**
      * Local cache of the RiakClient object
@@ -46,14 +35,14 @@ class TestCase extends FuelTestCase
      */
     protected function _riak($host = null, $port = null)
     {
-        if ($host)
+        if (!$host)
         {
-            $this->_riakHost = $host;
+            $host = \Config::get("riak.host");
         }
 
-        if ($port)
+        if (!$port)
         {
-            $this->_riakPort = $port;
+            $port = \Config::get("riak.port");
         }
 
         if (!$this->_riakClient)
@@ -76,13 +65,8 @@ class TestCase extends FuelTestCase
      * @return RiakBucket
      * @throws TestException
      */
-    protected function _bucket($bucket = null)
+    protected function _bucket($bucket)
     {
-        if ($bucket)
-        {
-            $this->_riakBucket = $bucket;
-        }
-
-        return $this->_riak()->bucket($this->_riakBucket);
+        return $this->_riak()->bucket($bucket);
     }
 }
